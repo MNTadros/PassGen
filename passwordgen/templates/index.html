@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="{{ url_for('static', filename='locked.ico') }}">
+    <script>
+        function submitForm() {
+            document.getElementById('passwordForm').submit();
+        }
+
+        function copy(that){
+            var inp =document.createElement('input');
+            document.body.appendChild(inp)
+            inp.value =that.textContent
+            inp.select();
+            document.execCommand('copy',false);
+            inp.remove();
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-r from-cyan-500 to-blue-500">
+<div class="">
+
+    <div class="">
+        <div class="flex justify-center text-lg pt-8 ">
+            <div class="w-16 h-16">
+                <img src="{{ url_for('static', filename='locked.ico') }}" alt="Password Generator">
+            </div>
+            <h1 class="text-cyan-500 font-mono bg-cyan-200 px-5 py-5 rounded font-bold">Password Generator</h1>
+        </div>
+
+        <div class="flex justify-left text-lg pt-8">
+
+        <form id="passwordForm" method="POST">
+            <label for="quantity" class="text-cyan-500 bg-cyan-200 px-2 py-2 rounded ml-32">Length (between 1 and 30):</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="30" value="{{ quantity }}">
+        </form>
+
+        <!-- <form id="" method="POST">
+            <button for="quantity" class="text-cyan-500 bg-red-200 px-2 py-2 rounded ml-32">Symbols</button>
+        </form> -->
+
+        <!--
+        <form id="" method="POST">
+            <button for="quantity" class="text-cyan-500 bg-red-200 px-1 py-1 rounded ml-32">User Generated Symbols</button>
+            <!-- <input type="number" id="quantity" name="quantity" min="1" max="30" value="{{ quantity }}">
+        </form> -->
+
+        </div>
+
+        <button type="button" class="bg-blue-500 text-white px-2 py-2 rounded ml-32 mt-32" onclick="submitForm()">Generate Password</button>
+
+        <div class="flex justify-center text-lg pt-8">
+            {% if password %}
+            <div class="bg-cyan-100">
+                <h2 class="text-cyan-800 bg-cyan-100 px-3 py-3 rounded flex justify-right">
+                    <span class="font-bold">Generated Password:&nbsp;</span> <span onclick="copy(this)">{{ password }}&nbsp;&nbsp;</span>
+                    <img src="{{ url_for('static', filename='copy.ico') }}" alt="Password Generator" class="w-6 h-6">
+                </h2>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
